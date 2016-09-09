@@ -1,6 +1,7 @@
 package com.hengpeng.itfintracker.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.hengpeng.itfintracker.commons.constant.ReturnConstant;
 import com.hengpeng.itfintracker.commons.model.ReturnResultUtil;
 import com.hengpeng.itfintracker.commons.page.Page;
+import com.hengpeng.itfintracker.commons.utils.MemcachedUtils;
 import com.hengpeng.itfintracker.commons.utils.UserBehaviorExcelUtils;
 import com.hengpeng.itfintracker.entity.UserBehaviorRecord;
 import com.hengpeng.itfintracker.service.PageViewService;
@@ -32,6 +34,7 @@ public class UserBehaviorRecordController {
 
 	private static final Logger logger = Logger.getLogger(UserBehaviorRecordController.class);
 
+	
 	@Autowired
 	private PageViewService pageViewService;
 
@@ -49,18 +52,26 @@ public class UserBehaviorRecordController {
 	public Page getUserBehaviorRecordPageList(HttpServletRequest request, String date_start, String date_end, String viewType, Page page) {
 		try {
 			logger.info("查询用户行为分页信息开始");
-			Map<String, Object> map = new HashMap<String, Object>();
-			if (StringUtils.isNotEmpty(date_start)) {
-				map.put("date_start", date_start);
+			if (MemcachedUtils
+					.get("userBehavior.list." + date_start + "_" + date_end + "_" + viewType + "_" + page.getStart() + "_" + page.getEnd()) != null) {
+				page = (Page) MemcachedUtils
+						.get("userBehavior.list." + date_start + "_" + date_end + "_" + viewType + "_" + page.getStart() + "_" + page.getEnd());
+			} else {
+				Map<String, Object> map = new HashMap<String, Object>();
+				if (StringUtils.isNotEmpty(date_start)) {
+					map.put("date_start", date_start);
+				}
+				if (StringUtils.isNotEmpty(viewType)) {
+					map.put("viewType", viewType);
+				}
+				if (StringUtils.isNotEmpty(date_end)) {
+					map.put("date_end", date_end);
+				}
+				page.setMap(map);
+				page = pageViewService.getUserBehaviorRecordPageList(page);
+				MemcachedUtils.set("userBehavior.list." + date_start + "_" + date_end + "_" + viewType + "_" + page.getStart() + "_" + page.getEnd(),
+						page, new Date(1000 * 30));
 			}
-			if (StringUtils.isNotEmpty(viewType)) {
-				map.put("viewType", viewType);
-			}
-			if (StringUtils.isNotEmpty(date_end)) {
-				map.put("date_end", date_end);
-			}
-			page.setMap(map);
-			page = pageViewService.getUserBehaviorRecordPageList(page);
 			logger.info("查询用户行为分页信息结束");
 		} catch (Exception e) {
 			e.printStackTrace();

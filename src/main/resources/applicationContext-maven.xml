@@ -23,6 +23,7 @@
 			<list>
 				<value>classpath:config.properties</value>
 				<value>classpath:jdbc.properties</value>
+				<value>classpath:memcached.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -110,8 +111,6 @@
 		proxy-target-class="true" />
 	<context:annotation-config />
 	
-	
-	
 	<!-- 开启定时器扫描 -->
 	<task:annotation-driven/>  
 	<!-- 配置扫描包 -->
@@ -124,5 +123,9 @@
 	
     <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
         <property name="configLocation" value="classpath:ehcache.xml" />
-    </bean>       
+    </bean>    
+    
+     <!-- 引入memcached配置文件 -->  
+    <import resource="memcached.xml"/> 
+     
 </beans>
