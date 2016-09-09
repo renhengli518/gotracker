@@ -19,7 +19,7 @@ public class MemcachedUtils {
 	private static MemCachedClient cachedClient;
 	static {
 		if (cachedClient == null)
-			cachedClient = new MemCachedClient("memcachedClient");
+			cachedClient = new MemCachedClient();
 	}
 
 	private MemcachedUtils() {
