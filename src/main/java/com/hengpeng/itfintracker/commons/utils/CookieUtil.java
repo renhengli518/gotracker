@@ -62,22 +62,4 @@ public class CookieUtil {
 		return cookieMap;
 	}
 
-	/**
-	 * 获取 会议-来宾 cookie
-	 * @param mid
-	 * @return
-	 */
-	public static String getMeetGuestCookieName(String mid) {
-		return SecurityUtil.MD5String(mid + "guest");
-	}
-	
-	/**
-	 * 获取 会议-观摩 cookie
-	 * @param mid
-	 * @return
-	 */
-	public static String getMeetWatchCookieName(String mid) {
-		return SecurityUtil.MD5String(mid + "watch");
-	}
-
 }

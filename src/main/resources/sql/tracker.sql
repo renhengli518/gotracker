@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2016-09-08 10:43:54
+Date: 2016-09-13 13:29:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -62,6 +62,9 @@ CREATE TABLE `user_behavior_record` (
   `stringDate` varchar(10) DEFAULT NULL,
   `browserType` varchar(255) DEFAULT NULL,
   `browserVersion` varchar(255) DEFAULT NULL,
+  `isMobile` tinyint(4) DEFAULT NULL,
+  `completeDeviceName` varchar(255) DEFAULT NULL,
+  `formFactor` varchar(255) DEFAULT NULL,
   UNIQUE KEY `id` (`id`) USING BTREE,
   KEY `stringDate` (`stringDate`) USING HASH
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

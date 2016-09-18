@@ -52,11 +52,11 @@ public class UserBehaviorRecordController {
 	public Page getUserBehaviorRecordPageList(HttpServletRequest request, String date_start, String date_end, String viewType, Page page) {
 		try {
 			logger.info("查询用户行为分页信息开始");
-			if (MemcachedUtils
-					.get("userBehavior.list." + date_start + "_" + date_end + "_" + viewType + "_" + page.getStart() + "_" + page.getEnd()) != null) {
-				page = (Page) MemcachedUtils
-						.get("userBehavior.list." + date_start + "_" + date_end + "_" + viewType + "_" + page.getStart() + "_" + page.getEnd());
-			} else {
+//			if (MemcachedUtils
+//					.get("userBehavior.list." + date_start + "_" + date_end + "_" + viewType + "_" + page.getStart() + "_" + page.getEnd()) != null) {
+//				page = (Page) MemcachedUtils
+//						.get("userBehavior.list." + date_start + "_" + date_end + "_" + viewType + "_" + page.getStart() + "_" + page.getEnd());
+//			} else {
 				Map<String, Object> map = new HashMap<String, Object>();
 				if (StringUtils.isNotEmpty(date_start)) {
 					map.put("date_start", date_start);
@@ -69,9 +69,9 @@ public class UserBehaviorRecordController {
 				}
 				page.setMap(map);
 				page = pageViewService.getUserBehaviorRecordPageList(page);
-				MemcachedUtils.set("userBehavior.list." + date_start + "_" + date_end + "_" + viewType + "_" + page.getStart() + "_" + page.getEnd(),
-						page, new Date(1000 * 30));
-			}
+//				MemcachedUtils.set("userBehavior.list." + date_start + "_" + date_end + "_" + viewType + "_" + page.getStart() + "_" + page.getEnd(),
+//						page, new Date(1000 * 30));
+//			}
 			logger.info("查询用户行为分页信息结束");
 		} catch (Exception e) {
 			e.printStackTrace();

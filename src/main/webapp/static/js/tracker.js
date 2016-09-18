@@ -58,7 +58,7 @@ $(function(){
 		case "baidu":
 			fromWhere = "百度搜索";
 			grep = /wd\=.*\&/i;
-			str = refer.match(grep)
+			str = refferPage.match(grep)
 			keyword = str.toString().split("=")[1].split("&")[0];
 			//console.log(decodeURIComponent(keyword));
 			ykey = decodeURIComponent(keyword);
@@ -68,7 +68,7 @@ $(function(){
 		case "google":
 			fromWhere = "谷歌搜索";
 			grep = /&q\=.*\&/i;
-			str = refer.match(grep)
+			str = refferPage.match(grep)
 			keyword = str.toString().split("&")[1].split("=")[1];
 			//console.log(decodeURIComponent(keyword));
 			ykey = decodeURIComponent(keyword);
@@ -77,7 +77,7 @@ $(function(){
 		case "sogou":
 			fromWhere = "搜狗搜索";
 			grep = /query\=.*\&/i;
-			str = refer.match(grep)
+			str = refferPage.match(grep)
 			keyword = str.toString().split("&")[0].split("=")[1];
 			//console.log(decodeURIComponent(keyword));
 			ykey = decodeURIComponent(keyword);
@@ -119,13 +119,13 @@ $(function(){
 	//document.write(ykey);
 	
 	//获取用户当前所在的地域信息
-	$.getScript('http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function(){
-	    //console.log(remote_ip_info);
-	    var obj = remote_ip_info;
-	    country = obj.country;
-	    province = obj.province;
-	    city = obj.city;
-	});
+//	$.getScript('//int.dpool.sina.com.cn/iplookup/iplookup.php?format=js', function(){
+//	    //console.log(remote_ip_info);
+//	    var obj = remote_ip_info;
+//	    country = obj.country;
+//	    province = obj.province;
+//	    city = obj.city;
+//	});
 	//获取浏览器类型和版本
 	var sys = getBrowserInfo();
 	browserType = sys.browser;
@@ -167,9 +167,9 @@ function getBrowserInfo(){
 function gotracker( buttonPosition,linkPosition,viewType, endUserId, 
 		 pageUrl, country,  province, city, pageTitle, refferPage,fromWhere,serachKeyWords,browserType,browserVersion) {// 行为记录调用函数
 	//增加地理位置的获取的验证 和 设备类型获取的验证，防止恶意刷新，攻击服务，同时也会过了掉时间非常小的访问（可忽略不计）
-	if(!country || country == "" || country == null || country == "undefined"){
-		return false;
-	}
+//	if(!country || country == "" || country == null || country == "undefined"){
+//		return false;
+//	}
 	if(!complete_device_name || complete_device_name == "" || complete_device_name == null || complete_device_name == "undefined"){
 		return false;
 	}
@@ -232,9 +232,9 @@ function gotracker( buttonPosition,linkPosition,viewType, endUserId,
 	if (viewType) {
 		w.addParameter(new Parameter("viewType", viewType));
 	}
-	if (refferPage) {// 上一个浏览地址（网页来源url）
-		w.addParameter(new Parameter("refferPage", refferPage));
-	}
+//	if (refferPage) {// 上一个浏览地址（网页来源url）
+//		w.addParameter(new Parameter("refferPage", refferPage));
+//	}
 	if (serachKeyWords) {// 搜索关键字
 		w.addParameter(new Parameter("serachKeyWords", serachKeyWords));
 	}
@@ -322,6 +322,7 @@ function addPublicParameter(m, s) {// 添加公共参数
 	var q = window.location.href;
 	m += "&w_url=" + encodeURIComponent(q);// 当前页面URL
 	m += "&s_iev=" + navigator.userAgent || "";// 浏览器版本
+	m += "&refferPage="+refferPage;
 	var t = "iPod|iTouch|iPhone";
 	var p = /iPad/i;
 	var l = "Android|BlackBerry|SymbianOS|SymbOS|Windows Phone OS|WAP|Kindle|pad|pod";
@@ -403,7 +404,7 @@ trackerSupportKey.country = "country";
 trackerSupportKey.province = "province";
 trackerSupportKey.city = "city";
 trackerSupportKey.pageTitle = "title";
-trackerSupportKey.refferPage = "refferPage";
+//trackerSupportKey.refferPage = "refferPage";
 trackerSupportKey.buttonPosition = "buttonPosition";
 trackerSupportKey.stayTime = "stayTime";
 trackerSupportKey.stayTimeMilSeconds = "stayTimeMilSeconds";
