@@ -15,7 +15,6 @@
 	<label></label>
 	<input type="button" value="测试" />
 </body>
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=4342323"></script>
 <script type="text/javascript">
 	var userId = "";
 </script>

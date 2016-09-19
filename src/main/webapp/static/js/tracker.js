@@ -275,10 +275,8 @@ function Parameter(d, c) {// 添加参数
 	}
 }
 function TrackerContainer(e) {// 封装url
-	var f = (typeof urlPrefix != "undefined" && urlPrefix.tracker) ? urlPrefix.tracker
-			: "192.168.1.96:7777";
-	this.url = ("https:" == document.location.protocol ? "https://" : "http://")
-			+ f + "/behavior.img?1=1";
+	var f = urlPrefix.ga;
+	this.url = f + "/behavior.img?1=1";
 	this.url = addPublicParameter(this.url, e);
 	this.parameterArray = [];
 	this.stockArray = [];
